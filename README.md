@@ -1,4 +1,3 @@
-````markdown
 # olivetti_faces
 
 End_to_end_ML_project_olivetti_dataset
@@ -81,10 +80,10 @@ started with Machine Learning Operations (MLOps).
 ### Week 1
 
 - [x] Create a git repository (M5)
-- [ ] Make sure that all team members have write access to the GitHub repository (M5)
-- [ ] Create a dedicated environment for your project to keep track of your packages (M2)
-- [ ] Create the initial file structure using Cookiecutter with an appropriate template (M6)
-- [ ] Fill out the `data.py` file to download and preprocess the data (M6)
+- [x] Make sure that all team members have write access to the GitHub repository (M5)
+- [x] Create a dedicated environment for your project to keep track of your packages (M2)
+- [x] Create the initial file structure using Cookiecutter with an appropriate template (M6)
+- [x] Fill out the `data.py` file to download and preprocess the data (M6)
 - [ ] Add a model to `model.py` and a training procedure to `train.py` and get it running (M6)
 - [ ] Fill out `requirements.txt` / `requirements_dev.txt` or keep `pyproject.toml` / `uv.lock` up to date (M2 + M6)
 - [ ] Comply with good coding practices (PEP8) (M7)

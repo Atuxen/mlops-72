@@ -8,9 +8,14 @@ PYTHON_VERSION = "3.12.3"
 
 # Project commands
 @task
+def fetch_data(ctx: Context) -> None:
+    """Fetch data."""
+    ctx.run(f"uv run data fetch-kaggle-dataset", echo=True, pty=not WINDOWS)
+
+@task
 def preprocess_data(ctx: Context) -> None:
-    """Preprocess data."""
-    ctx.run(f"uv run src/{PROJECT_NAME}/data.py data/raw data/processed", echo=True, pty=not WINDOWS)
+    """Preprocess data, split in train, test, drift and save under data/processed."""
+    ctx.run(f"uv run data preprocess-data", echo=True, pty=not WINDOWS)
 
 @task
 def train(ctx: Context) -> None:
