@@ -1,0 +1,4 @@
+kernel: rbf
+C: 10.0
+gamma: scale
+

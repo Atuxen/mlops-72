@@ -1,0 +1,3 @@
+use_wandb: true
+project: olivetti_faces
+

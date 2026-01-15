@@ -1,8 +1,18 @@
+from sklearn.svm import SVC
+
+
+def build_svm(kernel: str, C: float, gamma: str) -> SVC:
+    return SVC(kernel=kernel, C=C, gamma=gamma, probability=True)
+
+
+
+
+"""
 from torch import nn
 import torch
 
 class Model(nn.Module):
-    """Just a dummy model to show how to structure your code"""
+   # Just a dummy model to show how to structure your code
     def __init__(self):
         super().__init__()
         self.layer = nn.Linear(1, 1)
@@ -14,3 +24,7 @@ if __name__ == "__main__":
     model = Model()
     x = torch.rand(1)
     print(f"Output shape of model: {model(x).shape}")
+
+OUR Model factory......HE HE HE.
+"""
+
