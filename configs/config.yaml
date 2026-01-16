@@ -9,4 +9,3 @@ defaults:
   - logging: logging
 
 seed: 42
-

@@ -84,17 +84,17 @@
  1267  ./build/RISCV/gem5.opt configs/example/gem5_library/RV.py   --restore   --checkpoint-restore-index=1000000000000   --checkpoint-dir=checkpoints/booted   --abs-max-tick=1200000000000
  1268  ./build/RISCV/gem5.opt configs/example/gem5_library/RV.py   --restore   --checkpoint-dir=checkpoints/booted   --checkpoint-restore-index=1000000000000   --abs-max-tick=1200000000000
  1269  ./build/RISCV/gem5.opt configs/example/gem5_library/RV.py   --restore   --checkpoint-dir checkpoints/booted   --checkpoint-restore-index 1000000000000   --abs-max-tick 1200000000000
- 1270  ./build/RISCV/gem5.opt configs/example/gem5_library/RV.py   --restore  
+ 1270  ./build/RISCV/gem5.opt configs/example/gem5_library/RV.py   --restore
  1271  clear
- 1272  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py 
+ 1272  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py
  1273  ./build/RISCV/gem5.opt configs/example/gem5_library/RV.py --restore
  1274  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py --restore
  1275  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py   --restore   --checkpoint-dir=checkpoints/booted   --checkpoint-restore-index=1000000000000   --abs-max-tick=1200000000000
  1276  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py     --restore     --checkpoint-dir=checkpoints/booted     --checkpoint-restore-index=1000000000000     --abs-max-tick=1200000000000
  1277  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py     --restore     --checkpoint-dir=checkpoints/booted     --checkpoint-restore-index=1000000000000
- 1278  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py     --restore 
+ 1278  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py     --restore
  1279  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py     --restore --restore_with_cpu O3
- 1280  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py     --restore 
+ 1280  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF.py     --restore
  1281  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF2.py
  1282  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF2.py --restore
  1283  ./build/RISCV/gem5.opt configs/example/gem5_library/RVF2.py
@@ -664,7 +664,7 @@
  1847  python3 ARM.py
  1848  python3 SPP1.py
  1849  cd util term
- 1850  cd util 
+ 1850  cd util
  1851  cd term
  1852  sudo ./build/RISCV/gem5.opt configs/learning_gem5/part1/FF.py --restore
  1853  ./m5term localhost 3456
@@ -790,7 +790,7 @@
  1973  ls
  1974  cd micsec/
  1975  ls
- 1976  cat micsec_registration.png 
+ 1976  cat micsec_registration.png
  1977  clear
  1978  cd
  1979  uv pip install "pytest < 4.6" pytest-cov==2.12.1
@@ -933,8 +933,8 @@
  2116  git push -u origin main
  2117  git fetch origin
  2118  git rebase origin/main
- 2119  git checkout origin/main -- . 
- 2120  git add .gitignore README.md  
+ 2119  git checkout origin/main -- .
+ 2120  git add .gitignore README.md
  2121  git commit -m "Overwrite .gitignore and README.md according to cookiecutter structure"
  2122  git push origin main
  2123  git rebase --abort

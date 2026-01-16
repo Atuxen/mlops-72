@@ -11,24 +11,37 @@ jobs:
     strategy:
       matrix:
         operating-system: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        python-version: ["3.12.3"]
+          # Python versions >= 3.12.3
+        python-version: ["3.12.3", "3.12"]
+
+        # Multiple PyTorch versions (CPU)
+        torch-version: ["2.2.2", "2.3.1"]
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          enable-cache: true
           python-version: ${{ matrix.python-version }}
+          enable-cache: true
 
       - name: Install dependencies
         run: |
           uv sync --locked --dev
           uv tree
 
-      - name: Run tests & coverage
+      - name: Lint code
         run: |
-          uv run coverage run -m pytest tests/
+          uv run ruff check src/ tests/
+
+      - name: Run tests with coverage
+        run: |
+          uv run coverage run -m pytest tests/ -v
           uv run coverage report -m
+          uv run coverage xml
+
+      - name: Enforce coverage threshold
+        run: |
+          uv run coverage report --fail-under=70

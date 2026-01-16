@@ -56,6 +56,19 @@ dev = [
     "dvc>=3.50.0",
 ]
 
+
+[tool.uv]
+package = true
+
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
 [tool.uv.sources]
 torch = [{ index = "pytorch-cpu" }]
 torchvision = [{ index = "pytorch-cpu" }]
@@ -74,4 +87,3 @@ omit = ["tests/*"]
 [project.scripts]
 data = "olivetti_faces.data:app"
 train = "olivetti_faces.train:train"
-

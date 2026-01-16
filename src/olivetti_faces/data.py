@@ -46,8 +46,8 @@ def preprocess(
 
     splits = {
         "train": idx[:n_train],
-        "test": idx[n_train:n_train + n_test],
-        "drift": idx[n_train + n_test:],
+        "test": idx[n_train : n_train + n_test],
+        "drift": idx[n_train + n_test :],
     }
 
     out = Path("data/processed")
@@ -62,4 +62,3 @@ def preprocess(
 
 if __name__ == "__main__":
     app()
-

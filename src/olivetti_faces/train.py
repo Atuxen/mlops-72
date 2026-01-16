@@ -43,11 +43,13 @@ def train(cfg: DictConfig):
     acc = accuracy_score(y_test.numpy(), model.predict(x_test))
 
     if cfg.logging.use_wandb:
-        wandb.log({
-            "accuracy": acc,
-            "pca_time_sec": pca_time,
-            "train_time_sec": train_time,
-        })
+        wandb.log(
+            {
+                "accuracy": acc,
+                "pca_time_sec": pca_time,
+                "train_time_sec": train_time,
+            }
+        )
 
     Path("models").mkdir(exist_ok=True)
     joblib.dump({"model": model, "pca": pca}, "models/svm.pkl")
@@ -55,9 +57,6 @@ def train(cfg: DictConfig):
 
 if __name__ == "__main__":
     train()
-
-
-
 
 
 """from olivetti_faces.model import Model

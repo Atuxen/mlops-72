@@ -1,13 +1,23 @@
 from sklearn.svm import SVC
 
+VALID_KERNELS = {"linear", "poly", "rbf", "sigmoid", "precomputed"}
+
+
+def build_svm(kernel: str, C: float, gamma: str) -> SVC:
+    if kernel not in VALID_KERNELS:
+        raise ValueError(f"Invalid kernel '{kernel}'. Must be one of {VALID_KERNELS}")
+    return SVC(kernel=kernel, C=C, gamma=gamma, probability=True)
+
+
+"""
+from sklearn.svm import SVC
+
 
 def build_svm(kernel: str, C: float, gamma: str) -> SVC:
     return SVC(kernel=kernel, C=C, gamma=gamma, probability=True)
 
 
-
-
-"""
+----------------------------------------------------------------------------------
 from torch import nn
 import torch
 
@@ -27,4 +37,3 @@ if __name__ == "__main__":
 
 OUR Model factory......HE HE HE.
 """
-
