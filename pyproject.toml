@@ -84,6 +84,13 @@ line-length = 120
 [tool.coverage.run]
 omit = ["tests/*"]
 
+[tool.mypy]
+python_version = "3.12.3"
+ignore_missing_imports = true
+follow_imports = "skip"
+show_error_codes = true
+pretty = true
+
 [project.scripts]
 data = "olivetti_faces.data:app"
 train = "olivetti_faces.train:train"
