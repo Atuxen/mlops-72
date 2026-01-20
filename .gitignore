@@ -9,6 +9,8 @@ src/olivetti_faces/data/processed
 # But track DVC metadata
 !src/olivetti_faces/data/processed.dvc
 
+# Ignore large library folders
+googleapiclient
 
 # test cache
 manual_test/
