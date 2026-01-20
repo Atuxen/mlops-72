@@ -8,8 +8,8 @@ src/olivetti_faces/data/processed
 
 # But track DVC metadata
 !src/olivetti_faces/data/processed.dvc
-
-
+# ignore google api client
+googleapiclient
 # test cache
 manual_test/
 
