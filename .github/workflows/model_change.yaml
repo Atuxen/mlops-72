@@ -1,0 +1,27 @@
+name: Model Registry Triggered CI  # Trigger change when model registry folder changes
+on:
+  push:
+    paths:
+      - "models/**"
+  pull_request:
+    paths:
+      - "models/**"
+
+jobs:
+  model_workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv and dependencies
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          python-version: 3.12.3
+
+      - name: Run unit tests
+        run: |
+          uv sync --locked --dev
+          uv run pytest tests/ -v

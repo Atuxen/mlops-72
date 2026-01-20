@@ -26,19 +26,16 @@ dependencies = [
     "numpy>=1.21.6",
     "kagglehub>=0.4.0",
     "invoke>=2.2.0",
-
     # Added: PCA + SVM
     "scikit-learn>=1.4.0",
-
     # Added: Hydra config management
     "hydra-core>=1.3.2",
     "omegaconf>=2.3.0",
-
     # Added: experiment tracking
     "wandb>=0.16.0",
-
     # Added: model persistence
     "joblib>=1.3.0",
+    "google-api-python-client>=2.188.0",
 ]
 
 [dependency-groups]

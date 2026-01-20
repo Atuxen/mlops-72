@@ -1,0 +1,27 @@
+name: Data Change Triggered CI   # If data get's changed , change should trigger
+on:
+  push:
+    paths:
+      - "data/**"
+  pull_request:
+    paths:
+      - "data/**"
+
+jobs:
+  data_workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv and dependencies
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          python-version: 3.12.3
+
+      - name: Run unit tests
+        run: |
+          uv sync --locked --dev
+          uv run pytest tests/ -v
