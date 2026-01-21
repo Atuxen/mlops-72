@@ -4,10 +4,10 @@ docs/site/
 #To keep track DVC metadata for the processed data I added line 5. It is important
 
 # Ignore processed data folder
-src/olivetti_faces/data/processed
+src/olivetti_faces/data/processed/*
 
 # But track DVC metadata
-!src/olivetti_faces/data/processed.dvc
+!src/olivetti_faces/data/processed/*.dvc
 
 # Ignore large library folders
 googleapiclient

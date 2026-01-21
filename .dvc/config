@@ -1,5 +1,6 @@
 [core]
     remote = myremote
+    autostage = true
 ['remote "storage"']
     url = /mnt/shared/dvc
 ['remote "gcsremote"']
