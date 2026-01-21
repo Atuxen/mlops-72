@@ -54,6 +54,7 @@ dev = [
 
     # Added: data/model version control
     "dvc>=3.50.0",
+    "dvc-gs>=3.0.0",
 ]
 
 

@@ -1,4 +1,9 @@
 [core]
-    remote = storage
+    remote = myremote
 ['remote "storage"']
     url = /mnt/shared/dvc
+['remote "gcsremote"']
+    url = gs://mlops72-dataset/dvcstore
+    credentialpath = /home/dr/mlops-dvc-sa.json
+['remote "myremote"']
+    url = gs://mlops72-dataset/
