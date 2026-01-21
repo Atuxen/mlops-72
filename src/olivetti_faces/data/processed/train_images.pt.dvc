@@ -1,0 +1,5 @@
+outs:
+- md5: d5ee11342ac1f25b94d7cbe58991e814
+  size: 22939212
+  hash: md5
+  path: train_images.pt
