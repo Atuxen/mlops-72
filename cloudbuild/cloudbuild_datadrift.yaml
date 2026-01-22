@@ -1,0 +1,23 @@
+steps:
+- name: "gcr.io/cloud-builders/docker"
+  id: "Build"
+  args:
+    [
+      "build",
+      ".",
+      "-f",
+      "dockerfiles/datadrift.dockerfile",
+      "-t",
+      "europe-west1-docker.pkg.dev/mlops-72/mlops-72-registry/datadrift-image:latest"
+    ]
+
+- name: "gcr.io/cloud-builders/docker"
+  id: "Push"
+  args:
+    [
+      "push",
+      "europe-west1-docker.pkg.dev/mlops-72/mlops-72-registry/datadrift-image:latest"
+    ]
+
+options:
+  logging: CLOUD_LOGGING_ONLY

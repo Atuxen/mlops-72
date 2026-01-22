@@ -1,0 +1,3 @@
+# configs/outputs/outputs.yaml
+# Where to upload artifacts after training
+model_uri: gs://mlops-72-bucket/artifacts/svm.pkl

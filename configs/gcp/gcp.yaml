@@ -1,0 +1,3 @@
+# configs/gcp/gcp.yaml
+project_id: mlops-72          # your GCP project ID (string)
+region: europe-west1

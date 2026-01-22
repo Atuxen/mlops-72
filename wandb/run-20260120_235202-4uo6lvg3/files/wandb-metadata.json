@@ -1,0 +1,37 @@
+{
+  "os": "macOS-15.1.1-arm64-arm-64bit",
+  "python": "CPython 3.12.0",
+  "startedAt": "2026-01-20T22:52:02.831260Z",
+  "program": "/Users/achtu/DTU/coursework/mlops-course/mlops-72/src/olivetti_faces/train.py",
+  "codePath": "src/olivetti_faces/train.py",
+  "codePathLocal": "src/olivetti_faces/train.py",
+  "git": {
+    "remote": "https://github.com/Atuxen/mlops-72.git",
+    "commit": "7b7d963681e83818531af5b74e91caff46a72804"
+  },
+  "email": "andreastuxen@gmail.com",
+  "root": "/Users/achtu/DTU/coursework/mlops-course/mlops-72",
+  "host": "DTU-K40N0Q94DM",
+  "executable": "/Users/achtu/DTU/coursework/.venv/bin/python3",
+  "cpu_count": 10,
+  "cpu_count_logical": 10,
+  "disk": {
+    "/": {
+      "total": "494384795648",
+      "used": "486912245760"
+    }
+  },
+  "memory": {
+    "total": "17179869184"
+  },
+  "apple": {
+    "name": "Apple M4",
+    "ecpuCores": 6,
+    "pcpuCores": 4,
+    "gpuCores": 10,
+    "memoryGb": 16,
+    "swapTotalBytes": "27917287424",
+    "ramTotalBytes": "17179869184"
+  },
+  "writerId": "iu44ejolg1zha24ibfkalojs9gb0t9hq"
+}
