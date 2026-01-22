@@ -1,4 +1,10 @@
 [core]
-    remote = storage
+    remote = gcs_remote
+    no_scm = true
 ['remote "storage"']
     url = /mnt/shared/dvc
+['remote "remote_storage"']
+    url = gs://mlops-72-bucket/
+    version_aware = true
+['remote "gcs_remote"']
+    url = gs://mlops-72-bucket

@@ -1,0 +1,70 @@
+_wandb:
+    value:
+        cli_version: 0.24.0
+        e:
+            iu44ejolg1zha24ibfkalojs9gb0t9hq:
+                apple:
+                    ecpuCores: 6
+                    gpuCores: 10
+                    memoryGb: 16
+                    name: Apple M4
+                    pcpuCores: 4
+                    ramTotalBytes: "17179869184"
+                    swapTotalBytes: "27917287424"
+                codePath: src/olivetti_faces/train.py
+                codePathLocal: src/olivetti_faces/train.py
+                cpu_count: 10
+                cpu_count_logical: 10
+                disk:
+                    /:
+                        total: "494384795648"
+                        used: "486912245760"
+                email: andreastuxen@gmail.com
+                executable: /Users/achtu/DTU/coursework/.venv/bin/python3
+                git:
+                    commit: 7b7d963681e83818531af5b74e91caff46a72804
+                    remote: https://github.com/Atuxen/mlops-72.git
+                host: DTU-K40N0Q94DM
+                memory:
+                    total: "17179869184"
+                os: macOS-15.1.1-arm64-arm-64bit
+                program: /Users/achtu/DTU/coursework/mlops-course/mlops-72/src/olivetti_faces/train.py
+                python: CPython 3.12.0
+                root: /Users/achtu/DTU/coursework/mlops-course/mlops-72
+                startedAt: "2026-01-20T22:52:02.831260Z"
+                writerId: iu44ejolg1zha24ibfkalojs9gb0t9hq
+        m: []
+        python_version: 3.12.0
+        t:
+            "1":
+                - 1
+                - 5
+                - 50
+                - 53
+                - 105
+            "2":
+                - 1
+                - 5
+                - 50
+                - 53
+                - 105
+            "3":
+                - 16
+            "4": 3.12.0
+            "5": 0.24.0
+            "12": 0.24.0
+            "13": darwin-arm64
+gcp:
+    value: '{''project_id'': ''mlops-72'', ''region'': ''europe-west1''}'
+logging:
+    value: '{''use_wandb'': True, ''project'': ''olivetti_faces'', ''wandb_secret_id'': ''WANDB_API_KEY''}'
+model:
+    value: '{''kernel'': ''rbf'', ''C'': 10.0, ''gamma'': ''scale''}'
+outputs:
+    value: '{''model_uri'': ''gs://mlops-72-bucket/artifacts/svm.pkl''}'
+pca:
+    value: '{''n_components'': 100}'
+seed:
+    value: 42
+version_base:
+    value: 1.2

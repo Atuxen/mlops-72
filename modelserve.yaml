@@ -1,0 +1,55 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+    run.googleapis.com/maxScale: '3'
+    run.googleapis.com/urls: '["https://modelserve-972473562634.europe-west1.run.app","https://modelserve-wlca2nsi4a-ew.a.run.app"]'
+  labels:
+    cloud.googleapis.com/location: europe-west1
+  name: modelserve
+  namespace: '972473562634'
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 552.0.0
+        run.googleapis.com/startup-cpu-boost: 'true'
+      labels:
+        client.knative.dev/nonce: tbibaicnyi
+        run.googleapis.com/startupProbeType: Default
+    spec:
+      containerConcurrency: 80
+      containers:
+      - env:
+        - name: MODEL_BUCKET
+          value: mlops-72-bucket
+        - name: MODEL_PREFIX
+          value: models
+        - name: MODEL_NAME
+          value: svm-face
+        image: europe-west1-docker.pkg.dev/mlops-72/mlops-72-registry/modelserve-image:latest
+        ports:
+        - containerPort: 8080
+          name: http1
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        startupProbe:
+          failureThreshold: 1
+          periodSeconds: 240
+          tcpSocket:
+            port: 8080
+          timeoutSeconds: 240
+      - name: collector
+        image: us-docker.pkg.dev/cloud-ops-agents-artifacts/cloud-run-gmp-sidecar/cloud-run-gmp-sidecar:1.2.0
+        args:
+          - "--scrape-uri=http://localhost:8080/metrics"
+      serviceAccountName: service-mlops72@mlops-72.iam.gserviceaccount.com
+      timeoutSeconds: 300
+  traffic:
+  - latestRevision: true
+    percent: 100

@@ -8,10 +8,8 @@ src/olivetti_faces/data/processed
 
 # But track DVC metadata
 !src/olivetti_faces/data/processed.dvc
-
-# Ignore large library folders
+# ignore google api client
 googleapiclient
-
 # test cache
 manual_test/
 
@@ -188,3 +186,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 /models
+
+# To ignore folder with keys (gcloud service accounts for example) and other sensitive files
+.secrets/
+/data

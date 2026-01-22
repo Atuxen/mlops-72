@@ -1,0 +1,13 @@
+workerPoolSpecs:
+- machineSpec:
+    machineType: n1-highmem-2
+  replicaCount: 1
+  containerSpec:
+    imageUri: europe-west1-docker.pkg.dev/mlops-72/mlops-72-registry/train-image:latest
+    command: ["bash", "-lc"]
+    args:
+    - |
+        set -euo pipefail
+        uv run dvc pull -v --no-scm
+        uv run python src/olivetti_faces/train.py
+

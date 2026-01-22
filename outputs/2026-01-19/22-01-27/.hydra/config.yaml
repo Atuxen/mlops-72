@@ -1,0 +1,17 @@
+version_base: 1.2
+seed: 42
+model:
+  kernel: rbf
+  C: 10.0
+  gamma: scale
+pca:
+  n_components: 100
+logging:
+  use_wandb: true
+  project: olivetti_faces
+  wandb_secret_id: WANDB_API_KEY
+gcp:
+  project_id: mlops-72
+  region: europe-west1
+outputs:
+  model_uri: gs://mlops-72-bucket/artifacts/svm.pkl

@@ -1,0 +1,115 @@
+{
+  "components": {
+    "comp-condition-1": {
+      "dag": {
+        "tasks": {
+          "train-model": {
+            "cachingOptions": {
+              "enableCache": true
+            },
+            "componentRef": {
+              "name": "comp-train-model"
+            },
+            "taskInfo": {
+              "name": "train-model"
+            }
+          }
+        }
+      },
+      "inputDefinitions": {
+        "parameters": {
+          "pipelinechannel--datadrift-detection-drift_detected": {
+            "parameterType": "STRING"
+          }
+        }
+      }
+    },
+    "comp-datadrift-detection": {
+      "executorLabel": "exec-datadrift-detection",
+      "outputDefinitions": {
+        "parameters": {
+          "drift_detected": {
+            "parameterType": "STRING"
+          }
+        }
+      }
+    },
+    "comp-train-model": {
+      "executorLabel": "exec-train-model"
+    }
+  },
+  "deploymentSpec": {
+    "executors": {
+      "exec-datadrift-detection": {
+        "container": {
+          "args": [
+            "\n          set -euo pipefail\n          uv run invoke datadrift --out \"{{$.outputs.parameters['drift_detected'].output_file}}\"\n        "
+          ],
+          "command": [
+            "bash",
+            "-lc"
+          ],
+          "image": "europe-west1-docker.pkg.dev/mlops-72/mlops-72-registry/datadrift-image:latest"
+        }
+      },
+      "exec-train-model": {
+        "container": {
+          "args": [
+            "\n            uv run invoke train\n            "
+          ],
+          "command": [
+            "bash",
+            "-lc"
+          ],
+          "image": "europe-west1-docker.pkg.dev/mlops-72/mlops-72-registry/train-image:latest"
+        }
+      }
+    }
+  },
+  "pipelineInfo": {
+    "name": "pipeline"
+  },
+  "root": {
+    "dag": {
+      "tasks": {
+        "condition-1": {
+          "componentRef": {
+            "name": "comp-condition-1"
+          },
+          "dependentTasks": [
+            "datadrift-detection"
+          ],
+          "inputs": {
+            "parameters": {
+              "pipelinechannel--datadrift-detection-drift_detected": {
+                "taskOutputParameter": {
+                  "outputParameterKey": "drift_detected",
+                  "producerTask": "datadrift-detection"
+                }
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "condition-1"
+          },
+          "triggerPolicy": {
+            "condition": "inputs.parameter_values['pipelinechannel--datadrift-detection-drift_detected'] == 'true'"
+          }
+        },
+        "datadrift-detection": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-datadrift-detection"
+          },
+          "taskInfo": {
+            "name": "datadrift-detection"
+          }
+        }
+      }
+    }
+  },
+  "schemaVersion": "2.1.0",
+  "sdkVersion": "kfp-2.15.2"
+}
