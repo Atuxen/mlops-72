@@ -9,28 +9,16 @@ COPY pyproject.toml uv.lock ./
 RUN pip install uv \
     && uv sync --frozen --no-install-project
 
-# Copy your code and configs
+# Copy code and configs
 COPY src/ src/
 COPY configs/ configs/
+COPY README.md README.md
+COPY LICENSE LICENSE
+COPY .dvc/ .dvc/
+COPY data.dvc data.dvc
+COPY tasks.py tasks.py
 
 # Run your training script
-CMD ["uv", "run", "src/olivetti_faces/train.py"]
+CMD ["uv", "run", "invoke", "train"]
 
 
-
-
-# Previous builtin
-#FROM ghcr.io/astral-sh/uv:python3.12.3-alpine AS base
-
-#COPY uv.lock uv.lock
-#COPY pyproject.toml pyproject.toml
-
-#RUN uv sync --frozen --no-install-project
-
-#COPY src src/
-#COPY README.md README.md
-#COPY LICENSE LICENSE
-
-#RUN uv sync --frozen
-
-#ENTRYPOINT ["uv", "run", "src/olivetti_faces/train.py"]

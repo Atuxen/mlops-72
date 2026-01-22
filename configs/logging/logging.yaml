@@ -1,3 +1,5 @@
 use_wandb: true
 project: olivetti_faces
 
+# Secret Manager secret id (not the value)
+wandb_secret_id: WANDB_API_KEY
