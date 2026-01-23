@@ -20,11 +20,8 @@ repos:
     rev: v0.1.3
     hooks:
       - id: ruff
-        args: ["--fix"]   # auto-fix safe issues
-      - id: ruff-format  # formatting
-
-
-
+        args: ["--fix"]
+      - id: ruff-format
 
   # -------------------------
   # Static typing (best-effort)
@@ -33,4 +30,5 @@ repos:
     rev: v1.19.1
     hooks:
       - id: mypy
-        additional_dependencies: [types-requests]
+        additional_dependencies:
+          - types-requests
