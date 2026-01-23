@@ -59,6 +59,9 @@ dev = [
     # Added: data/model version control
     "dvc>=3.50.0",
 ]
+[tool.hatch.envs.default.dependencies]
+requests = "2.31"
+types-requests = "2.31"
 
 
 [tool.uv]
