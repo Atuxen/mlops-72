@@ -2,11 +2,9 @@ import time
 from pathlib import Path
 import os
 import json
-from datetime import datetime, UTC
 
 from sklearn.svm import SVC
 import hydra
-from hydra.utils import to_absolute_path
 from loguru import logger
 from omegaconf import DictConfig
 import torch
@@ -17,6 +15,7 @@ from sklearn.metrics import accuracy_score
 from google.cloud import storage
 
 from olivetti_faces.secrets_utils import get_secret
+
 
 def build_svm(kernel: str, C: float, gamma: str) -> SVC:
     return SVC(kernel=kernel, C=C, gamma=gamma, probability=True)
@@ -33,9 +32,7 @@ def ensure_wandb_key(cfg):
         gcp_secret_id=cfg.logging.wandb_secret_id,  # e.g. "WANDB_API_KEY"
     )
     if not key:
-        raise RuntimeError(
-            "WANDB is enabled but WANDB_API_KEY was not found in env, .secrets json, or Secret Manager."
-        )
+        raise RuntimeError("WANDB is enabled but WANDB_API_KEY was not found in env, .secrets json, or Secret Manager.")
     os.environ["WANDB_API_KEY"] = key
 
 
@@ -68,7 +65,7 @@ def train(cfg: DictConfig):
     train_time = time.perf_counter() - t1
 
     acc = accuracy_score(y_test.numpy(), model.predict(x_test))
-    
+
     logger.info(f"Accuracy: {acc}")
     from datetime import datetime, UTC
 
@@ -78,10 +75,9 @@ def train(cfg: DictConfig):
     joblib.dump({"model": model, "pca": pca}, local_model_path)
     logger.info(f"Saved model bundle to {local_model_path}")
 
-
     VERSION = datetime.now(UTC).strftime("%Y-%m-%dT%H%M%SZ")
-    BUCKET_NAME = "mlops-72-bucket"      # <-- no slash
-    BUCKET_PREFIX = "models"             # <-- "folder" inside bucket
+    BUCKET_NAME = "mlops-72-bucket"  # <-- no slash
+    BUCKET_PREFIX = "models"  # <-- "folder" inside bucket
     MODEL_NAME = "svm-face"
 
     client = storage.Client()
@@ -114,6 +110,6 @@ def train(cfg: DictConfig):
         artifact.add_file("models/svm.pkl")
         wandb.log_artifact(artifact)
 
+
 if __name__ == "__main__":
     train()
-

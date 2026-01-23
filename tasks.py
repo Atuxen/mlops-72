@@ -2,11 +2,7 @@ import os
 from loguru import logger
 from kfp import compiler
 from invoke import task, Context
-from kfp import compiler
 from pipelines.training_pipeline import pipeline  # import your pipeline() function
-
-
-from invoke import Context, task
 from pathlib import Path
 
 WINDOWS = os.name == "nt"
@@ -30,9 +26,9 @@ def preprocess_data(ctx: Context) -> None:
 @task
 def train(ctx: Context) -> None:
     """Train model."""
-    ctx.run(f"uv run dvc config core.no_scm true", echo=True, pty=False)
+    ctx.run("uv run dvc config core.no_scm true", echo=True, pty=False)
     logger.info("Pulling data artifacts with DVC.")
-    ctx.run(f"uv run dvc pull", echo=True, pty=False)
+    ctx.run("uv run dvc pull", echo=True, pty=False)
     ctx.run(f"uv run src/{PROJECT_NAME}/train.py", echo=True, pty=False)
 
 
@@ -41,7 +37,6 @@ def test(ctx: Context) -> None:
     """Run tests."""
     ctx.run("uv run coverage run -m pytest tests/", echo=True, pty=not WINDOWS)
     ctx.run("uv run coverage report -m -i", echo=True, pty=not WINDOWS)
-
 
 
 # Documentation commands
@@ -58,14 +53,15 @@ def serve_docs(ctx: Context) -> None:
 
 
 @task
-def docker_build(ctx: Context, dockerfile: str, name:str) -> None:
+def docker_build(ctx: Context, dockerfile: str, name: str) -> None:
     """Build docker images."""
     ctx.run(
         f"docker build -t {name}:latest . -f dockerfiles/{dockerfile} --progress=plain",
         echo=True,
         pty=False,
     )
-  
+
+
 @task
 def docker_run(ctx: Context, image: str, port: bool = False) -> None:
     secrets_dir = Path.cwd() / ".secrets"
@@ -79,6 +75,7 @@ docker run --rm {port_flag} \
 """.strip()
 
     ctx.run(cmd, echo=True, pty=False)
+
 
 @task
 def datadrift(ctx: Context, out: str = "") -> None:
@@ -104,6 +101,7 @@ def datadrift(ctx: Context, out: str = "") -> None:
         pty=False,
     )
 
+
 @task
 def submit_build_job(ctx: Context, jobfile: str) -> None:
     """Submit a build job to Cloud Build."""
@@ -126,7 +124,6 @@ def run_custom_job_datadrift(ctx: Context) -> None:
         echo=True,
         pty=False,
     )
-
 
 
 @task
@@ -162,31 +159,31 @@ def deploy_model_serving(ctx: Context) -> None:
 
 
 @task
-def deploy_public_toggle(ctx: Context, toggle:bool = False) -> None:
+def deploy_public_toggle(ctx: Context, toggle: bool = False) -> None:
     """Deploy public toggle to Cloud Run."""
     if toggle:
         ctx.run(
             "gcloud run services add-iam-policy-binding modelserve "
             "--region=europe-west1 "
             "--project=mlops-72 "
-            "--member=\"allUsers\" "
-            "--role=\"roles/run.invoker\"",
+            '--member="allUsers" '
+            '--role="roles/run.invoker"',
             echo=True,
             pty=False,
         )
-    else: 
+    else:
         ctx.run(
             "gcloud run services remove-iam-policy-binding modelserve "
             "--region=europe-west1 "
             "--project=mlops-72 "
-            "--member=\"allUsers\" "
-            "--role=\"roles/run.invoker\"",
+            '--member="allUsers" '
+            '--role="roles/run.invoker"',
             echo=True,
             pty=False,
         )
 
 
-@task 
+@task
 def run_local_prometheus(ctx: Context) -> None:
     """Run local Prometheus instance."""
     ctx.run(
@@ -198,8 +195,6 @@ def run_local_prometheus(ctx: Context) -> None:
     )
 
 
-
-
 @task
 def compile_pipeline(ctx: Context, output: str = "pipeline.json") -> None:
     compiler.Compiler().compile(
@@ -207,11 +202,6 @@ def compile_pipeline(ctx: Context, output: str = "pipeline.json") -> None:
         package_path=output,
     )
     print(f"Wrote {output}")
-
-
-
-
-
 
 
 @task
@@ -240,7 +230,6 @@ gcloud ai pipeline-jobs submit \
 """.strip()
 
     ctx.run(cmd, echo=True, pty=False)
-
 
 
 @task

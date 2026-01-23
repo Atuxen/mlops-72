@@ -4,12 +4,12 @@ import json
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import List, Optional
-
+from sklearn.svm import SVC
 import joblib
 from fastapi import FastAPI, HTTPException
 from google.cloud import storage
 from pydantic import BaseModel, Field
-from prometheus_client import Counter, Histogram, make_asgi_app
+from prometheus_client import Counter, Histogram
 from fastapi import Request
 from prometheus_client import CONTENT_TYPE_LATEST, REGISTRY, generate_latest
 from fastapi.responses import Response
@@ -21,10 +21,6 @@ def build_svm(kernel: str, C: float, gamma: str) -> SVC:
     if kernel not in VALID_KERNELS:
         raise ValueError(f"Invalid kernel '{kernel}'. Must be one of {VALID_KERNELS}")
     return SVC(kernel=kernel, C=C, gamma=gamma, probability=True)
-
-
-
-from sklearn.svm import SVC
 
 
 # -------------------------
@@ -79,7 +75,6 @@ pca = None
 model_version: Optional[str] = None
 
 
-
 # -------------------------
 # Startup: download latest bundle from GCS
 # -------------------------
@@ -97,7 +92,6 @@ def _load_from_gcs() -> None:
     bundle_blob_name = latest["bundle"]  # e.g. models/svm-face/versions/.../svm.pkl
     MODEL_VERSION_INFO.labels(version=model_version).inc()
 
-
     local_bundle = LOCAL_DIR / "svm.pkl"
     bucket.blob(bundle_blob_name).download_to_filename(str(local_bundle))
 
@@ -112,7 +106,6 @@ def _load_from_gcs() -> None:
         # If you ever store only svm directly, you *can't* do image->pca->svm
         svm = loaded
         globals()["pca"] = None
-
 
     print(f"Loaded model_version={model_version} from gs://{MODEL_BUCKET}/{bundle_blob_name}")
 
@@ -181,9 +174,11 @@ class PredictResponse(BaseModel):
 # -------------------------
 app = FastAPI(title="svm-model-server", version="1.0.0", lifespan=lifespan)
 
+
 @app.get("/metrics")
 def metrics():
     return Response(generate_latest(REGISTRY), media_type=CONTENT_TYPE_LATEST)
+
 
 @app.middleware("http")
 async def metrics_middleware(request: Request, call_next):
@@ -209,6 +204,7 @@ def readyz():
         raise HTTPException(status_code=503, detail="Model not loaded")
     return {"ready": True, "model_version": model_version}
 
+
 @app.post("/predict_image", response_model=PredictResponse)
 def predict_image(req: PredictImageRequest):
     if svm is None or model_version is None:
@@ -217,7 +213,7 @@ def predict_image(req: PredictImageRequest):
         raise HTTPException(status_code=503, detail="PCA not loaded (bundle missing 'pca')")
 
     # sklearn expects shape (n_samples, n_features)
-    X_pixels = [req.pixels]              # (1, 4096)
+    X_pixels = [req.pixels]  # (1, 4096)
     PREDICTIONS_TOTAL.labels(endpoint="/predict_image").inc()
 
     start = time.perf_counter()

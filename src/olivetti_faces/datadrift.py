@@ -3,7 +3,6 @@ import pandas as pd
 import torch
 from evidently.presets import DataDriftPreset
 from evidently import Report
-import sys
 from loguru import logger
 import re
 from pathlib import Path
@@ -13,15 +12,14 @@ import argparse
 # Reference: fixed baseline used for training
 logger.info("Loading reference and current data for drift monitoring...")
 refference_olivetti_images = torch.load("data/processed/refference_images.pt")  # shape: (N, 1, H, W)
-current_data_olivetti_images = torch.load("data/processed/train_images.pt") 
+current_data_olivetti_images = torch.load("data/processed/train_images.pt")
 
-#test with drift data
-#current_data_olivetti_images = torch.load("data/processed/drift_images.pt") 
+# test with drift data
+# current_data_olivetti_images = torch.load("data/processed/drift_images.pt")
 
 # Convert to numpy in shape (N, H, W) so your feature extraction works nicely
 refference_olivetti_images = refference_olivetti_images.squeeze(1).numpy()
 current_data_olivetti_images = current_data_olivetti_images.squeeze(1).numpy()
-
 
 
 def extract_features(images: np.ndarray) -> np.ndarray:
@@ -41,6 +39,7 @@ def extract_features(images: np.ndarray) -> np.ndarray:
         features.append([avg_brightness, contrast, sharpness])
     return np.array(features, dtype=np.float64)
 
+
 logger.info("Extracting features from images for drift monitoring...")
 refference_feature = extract_features(refference_olivetti_images)
 current_data_features = extract_features(current_data_olivetti_images)
@@ -54,6 +53,7 @@ current_df = pd.DataFrame(current_data_features, columns=feature_columns)
 
 _DRIFT_SCORE_RE = re.compile(r"Drift score is ([0-9]+(?:\.[0-9]+)?)")
 _ACTUAL_VALUE_RE = re.compile(r"Actual value ([0-9]+(?:\.[0-9]+)?)")
+
 
 def has_data_drift(reference_df, current_df) -> bool:
     evaluation = Report([DataDriftPreset()], include_tests=True).run(
@@ -85,8 +85,7 @@ def has_data_drift(reference_df, current_df) -> bool:
             actual_share = float(m.group(1)) if m else None
 
             logger.info(
-                f"Drifted feature share: actual={actual_share}, "
-                f"threshold={drift_share_threshold}, status={status}"
+                f"Drifted feature share: actual={actual_share}, " f"threshold={drift_share_threshold}, status={status}"
             )
 
             if status not in ("SUCCESS", "PASS", "OK"):
@@ -100,10 +99,7 @@ def has_data_drift(reference_df, current_df) -> bool:
             m = _DRIFT_SCORE_RE.search(description)
             drift_score = float(m.group(1)) if m else None
 
-            logger.info(
-                f"{column}: drift_score={drift_score}, "
-                f"threshold={threshold}, status={status}"
-            )
+            logger.info(f"{column}: drift_score={drift_score}, " f"threshold={threshold}, status={status}")
 
             if status not in ("SUCCESS", "PASS", "OK"):
                 drift_detected = True
@@ -118,6 +114,7 @@ def main(out_path: str) -> int:
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     Path(out_path).write_text("true" if drift_detected else "false")
     return 0
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
