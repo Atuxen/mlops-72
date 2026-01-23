@@ -23,6 +23,9 @@ repos:
         args: ["--fix"]   # auto-fix safe issues
       - id: ruff-format  # formatting
 
+
+
+
   # -------------------------
   # Static typing (best-effort)
   # -------------------------
@@ -30,4 +33,4 @@ repos:
     rev: v1.19.1
     hooks:
       - id: mypy
-        additional_dependencies: []
+        additional_dependencies: [types-requests]
