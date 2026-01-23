@@ -27,9 +27,7 @@ PREDICT_JSON_VALUE_RAW = os.getenv("PREDICT_JSON_VALUE", '"synthetic-check"')  #
 try:
     PREDICT_JSON_VALUE = json.loads(PREDICT_JSON_VALUE_RAW)
 except json.JSONDecodeError as e:
-    raise RuntimeError(
-        f"PREDICT_JSON_VALUE must be valid JSON. Got: {PREDICT_JSON_VALUE_RAW}"
-    ) from e
+    raise RuntimeError(f"PREDICT_JSON_VALUE must be valid JSON. Got: {PREDICT_JSON_VALUE_RAW}") from e
 
 # -------------------------
 # Prometheus metrics (about the TARGET)

@@ -3,15 +3,19 @@ from kfp import dsl
 PROJECT_ID = "mlops-72"
 REPO = "mlops-72-registry"
 
-@dsl.container_component
-def datadrift_detection(drift_detected: dsl.OutputPath(str)) -> dsl.ContainerSpec:
+
+def datadrift_detection(
+    drift_detected: dsl.OutputPath[str],
+) -> dsl.ContainerOp:
     return dsl.ContainerSpec(
         image=f"europe-west1-docker.pkg.dev/{PROJECT_ID}/{REPO}/datadrift-image:latest",
         command=["bash", "-lc"],
-        args=[f"""
+        args=[
+            f"""
           set -euo pipefail
           uv run invoke datadrift --out "{drift_detected}"
-        """],
+        """
+        ],
     )
 
 
@@ -26,6 +30,7 @@ def train_model() -> dsl.ContainerSpec:
             """
         ],
     )
+
 
 @dsl.pipeline
 def pipeline():

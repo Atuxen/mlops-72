@@ -89,7 +89,7 @@ line-length = 120
 omit = ["tests/*"]
 
 [tool.mypy]
-python_version = "3.12.3"
+python_version = "3.12"
 ignore_missing_imports = true
 follow_imports = "skip"
 show_error_codes = true

@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 
+
 def get_secret(
     name: str,
     *,

@@ -19,7 +19,6 @@ def fetch_dataset(
     dataset: str = "martininf1n1ty/olivetti-faces-augmented-dataset",
     output_dir: Path = Path("data/external"),
 ) -> None:
-    
     logger.info(f"Downloading {dataset}...")
     cache = Path(kagglehub.dataset_download(dataset))
     target = output_dir / dataset.split("/")[-1]
@@ -50,7 +49,9 @@ def preprocess(
     logger.info(f"Data split: {n_train} train, {n_test} test, {len(x) - n_train - n_test} drift samples.")
     splits = {
         "train": idx[:n_train],
-        "refference": idx[:n_train], # First refference is just the train set, but over time it will be updated with new data
+        "refference": idx[
+            :n_train
+        ],  # First refference is just the train set, but over time it will be updated with new data
         "test": idx[n_train : n_train + n_test],
         "drift": idx[n_train + n_test :],
     }
